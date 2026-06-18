@@ -18,6 +18,7 @@ export default function Navbar() {
   const {data: session} = useSession()
   const user = session?.user
 
+
   const navItems = user
     ? [
         { label: 'Home', href: '/' },
@@ -35,7 +36,7 @@ export default function Navbar() {
        const handleLogout = async () => {
         
        await signOut()
-       console.log('handle signout')
+      
         }
 
   return (
@@ -86,9 +87,13 @@ export default function Navbar() {
               ))}
 
               {user && (
+               <>
+               <p className='text-white font-bold'>Hi,{user?.name}</p>
                 <Button onClick={handleLogout} size="sm" color="default">
                   Logout
                 </Button>
+                
+               </>
               )}
             </nav>
 
