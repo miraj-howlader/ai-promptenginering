@@ -6,16 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@heroui/react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
+import { signOut, useSession } from '@/lib/auth.client'
 
-// 👉 TEMP AUTH
-const useAuth = () => {
-  const user = null
-  return { user }
-}
+
+
+
 
 export default function Navbar() {
-  const { user } = useAuth()
+  
   const [open, setOpen] = useState(false)
+  const {data: session} = useSession()
+  const user = session?.user
 
   const navItems = user
     ? [
@@ -29,6 +30,13 @@ export default function Navbar() {
         { label: 'Login', href: '/login' },
         { label: 'Register', href: '/register' },
       ]
+
+
+       const handleLogout = async () => {
+        
+       await signOut()
+       console.log('handle signout')
+        }
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
@@ -78,7 +86,7 @@ export default function Navbar() {
               ))}
 
               {user && (
-                <Button size="sm" color="default">
+                <Button onClick={handleLogout} size="sm" color="default">
                   Logout
                 </Button>
               )}
@@ -118,7 +126,7 @@ export default function Navbar() {
                 ))}
 
                 {user && (
-                  <Button size="sm" className="w-full">
+                  <Button onClick={handleLogout} size="sm" className="w-full">
                     Logout
                   </Button>
                 )}
