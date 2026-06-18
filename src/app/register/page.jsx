@@ -63,6 +63,18 @@ const Registration = () => {
     }
   }
 
+const handleGoogleLogin = async () => {
+  try {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    
+    })
+  } catch (err) {
+    toast.error("Google login failed")
+  }
+}
+
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#05060a] px-4">
 
@@ -210,7 +222,7 @@ const Registration = () => {
           </div>
 
           {/* GOOGLE */}
-          <Button className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10">
+          <Button onClick={handleGoogleLogin} className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 text-white hover:bg-white/10">
             <FaGoogle className="mr-2 text-red-400" />
             Continue with Google
           </Button>
@@ -219,7 +231,7 @@ const Registration = () => {
           <p className="text-center text-sm text-gray-400">
             Already have an account?{' '}
             <Link
-              href={`/signin?redirect=${redirectTo}`}
+              href={`/login?redirect=${redirectTo}`}
               className="text-violet-400 hover:text-violet-300"
             >
               Sign In
