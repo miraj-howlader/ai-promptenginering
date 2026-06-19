@@ -2,6 +2,7 @@ import Banner from '@/components/Banner'
 import CustomerReviews from '@/components/CustomerReviews '
 import FeaturedPrompt from '@/components/FeaturedPrompt'
 import HowItWorks from '@/components/HowItWorks '
+import Newsletter from '@/components/Newsletter'
 import StatsSection from '@/components/StatsSection'
 import TopCreators from '@/components/TopCreators '
 import WhyChooseUs from '@/components/WhyChooseUs '
@@ -17,6 +18,7 @@ const Home = () => {
       <CustomerReviews/>
       <HowItWorks/>
       <StatsSection/>
+      <Newsletter/>
     </div>
   )
 }
