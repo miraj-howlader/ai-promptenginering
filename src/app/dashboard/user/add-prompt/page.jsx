@@ -1,9 +1,9 @@
 import React from 'react'
 
-const AddPrompt = () => {
+const UserAddPrompts = () => {
   return (
-    <div>AddPrompt</div>
+    <div>UserAddPrompts</div>
   )
 }
 
-export default AddPrompt
+export default UserAddPrompts
