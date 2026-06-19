@@ -2,10 +2,15 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import { Button } from '@heroui/react'
+import Link from 'next/link'
 
-const PromptCard = ({ prompt }) => {
+
+const PromptCard =({ prompt,session }) => {
+    
   return (
     <motion.div
+      
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -68,6 +73,22 @@ const PromptCard = ({ prompt }) => {
           <span>🔥 {prompt.copyCount || 0} uses</span>
           <span>{prompt.visibility}</span>
         </div>
+
+       <Link href={`/prompts/${prompt._id}`}>
+  {session && (
+    <Button
+      className="
+        mt-4 text-white font-medium
+        bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+        hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500
+        transition-all duration-300
+        shadow-md hover:shadow-lg
+      "
+    >
+      Prompt Details
+    </Button>
+  )}
+</Link>
 
       </div>
     </motion.div>

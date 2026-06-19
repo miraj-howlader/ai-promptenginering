@@ -6,6 +6,7 @@ import { Mail, Sparkles } from 'lucide-react'
 import { FaGithub } from 'react-icons/fa'
 import { BsTwitter } from 'react-icons/bs'
 import { LiaLinkedin } from 'react-icons/lia'
+import Image from 'next/image'
 
 
 const footerLinks = {
@@ -67,7 +68,8 @@ export default function Footer() {
               </div>
 
               <span className="font-bold text-xl">
-                PromptHub
+                <Image src={'/miraj.png'} alt='Logo' width={150} height={150}
+                 className=' rounded-full bg-amber-300'/>
               </span>
             </Link>
 

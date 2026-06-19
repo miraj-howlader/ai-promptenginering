@@ -1,10 +1,12 @@
 import { getAllPrompts } from '@/lib/api'
 import React from 'react'
 import PromptCard from './PromptCard'
+import { getUserSession } from '@/lib/cors/session'
 
 const FeaturedPrompt = async () => {
   let data = []
-
+  const session = await getUserSession()
+ 
   try {
     data = await getAllPrompts()
   } catch (error) {
@@ -36,7 +38,7 @@ const FeaturedPrompt = async () => {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {promptData.map((prompt) => (
-            <PromptCard prompt={prompt} key={prompt._id} />
+            <PromptCard prompt={prompt} key={prompt._id} session={session}/>
           ))}
         </div>
       </div>
