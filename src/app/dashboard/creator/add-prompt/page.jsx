@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { Input, Button, Chip } from '@heroui/react'
+import toast from 'react-hot-toast'
+import { redirect } from 'next/navigation'
 
 export default function AddPromptPage() {
   const [tags, setTags] = useState('')
@@ -34,7 +36,7 @@ export default function AddPromptPage() {
     const formData = new FormData()
     formData.append('image', file)
       
-    const imageBBApiKey = process.env.IMGBB_API_KEY
+    const imageBBApiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY
     const res = await fetch(
       `https://api.imgbb.com/1/upload?key=${imageBBApiKey}`,
       {
@@ -92,8 +94,18 @@ export default function AddPromptPage() {
       status: 'pending',
     }
 
-    console.log('FINAL DATA:', data)
-
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/add-prompt`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(data)
+    })
+    const dataone = await res.json()
+     if(dataone){
+      toast.success("Promt crated successfully")
+      redirect('/prompts')
+     }
     setLoading(false)
   }
 
@@ -116,7 +128,7 @@ export default function AddPromptPage() {
             name="title"
             label="Prompt Title"
             placeholder="Enter your prompt title"
-            isRequired
+            required
           />
 
           {/* DESCRIPTION */}
@@ -129,6 +141,7 @@ export default function AddPromptPage() {
               rows={3}
               className="w-full border rounded-xl p-3"
               placeholder="Write a short description of your prompt..."
+              required
             />
           </div>
 
@@ -142,6 +155,7 @@ export default function AddPromptPage() {
               rows={8}
               className="w-full border rounded-xl p-3"
               placeholder="Write your full AI prompt here..."
+              required
             />
           </div>
 
@@ -155,6 +169,7 @@ export default function AddPromptPage() {
               <select
                 name="category"
                 className="border rounded-xl p-3 w-full"
+                required
               >
                 {categories.map(c => (
                   <option key={c}>{c}</option>
@@ -184,6 +199,7 @@ export default function AddPromptPage() {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             placeholder="seo, marketing, ai, productivity"
+            required
           />
 
           <div className="flex flex-wrap gap-2">
@@ -204,6 +220,7 @@ export default function AddPromptPage() {
             <select
               name="difficulty"
               className="border rounded-xl p-3 w-full"
+              required
             >
               <option>Beginner</option>
               <option>Intermediate</option>
@@ -221,6 +238,7 @@ export default function AddPromptPage() {
               type="file"
               accept="image/*"
               onChange={handleImage}
+              required
             />
 
             {preview && (
