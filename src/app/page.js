@@ -1,4 +1,5 @@
 import Banner from '@/components/Banner'
+import CustomerReviews from '@/components/CustomerReviews '
 import FeaturedPrompt from '@/components/FeaturedPrompt'
 import TopCreators from '@/components/TopCreators '
 import WhyChooseUs from '@/components/WhyChooseUs '
@@ -11,6 +12,7 @@ const Home = () => {
       <FeaturedPrompt/>
       <WhyChooseUs/>
       <TopCreators/>
+      <CustomerReviews/>
     </div>
   )
 }
