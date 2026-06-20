@@ -5,7 +5,7 @@ import { Input, Button, Chip } from '@heroui/react'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 
-export default function AddPromptPage() {
+export default function CreatorAddPromptPage() {
   const [tags, setTags] = useState('')
   const [preview, setPreview] = useState('')
   const [imageUrl, setImageUrl] = useState('')
