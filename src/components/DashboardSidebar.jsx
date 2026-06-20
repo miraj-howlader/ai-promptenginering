@@ -1,7 +1,7 @@
 import { getUserSession } from '@/lib/cors/session'
 import React from 'react'
 import { Bell, House, Magnifier, Bookmark, FileText, CreditCard, Gear } from "@gravity-ui/icons";
-import { Building, Users, Briefcase, Plus, Box } from 'lucide-react';
+import { Building, Users, Briefcase, Plus, Box, User } from 'lucide-react';
 import Link from 'next/link';
 import MobileDrawer from './MobileDrawer'; // Import the client toggle component
 
@@ -21,7 +21,7 @@ const DashboardSidebar = async () => {
     { icon: Bookmark, href: "/dashboard/user/my-prompts", label: "My-prompt" },
     { icon: FileText, href: "/dashboard/user/my-reviews", label: "My-reviews" },
     { icon: CreditCard, href: "/dashboard/user/save-prompts", label: "Save-prompts" },
-    { icon: Gear, href: "/settings", label: "Settings" },
+    { icon: User, href: "/dashboard/user/profile", label: "Profile" },
   ];
 
   const adminNavLinks = [
