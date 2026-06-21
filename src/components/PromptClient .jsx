@@ -1,10 +1,15 @@
 'use client'
 
+
+import { useState } from "react"
 import toast from "react-hot-toast"
 
 
 
-export default function PromptClient({ prompt }) {
+export default function PromptClient({ prompt,user }) {
+    const [bookmarked, setBookmarked] = useState(false)
+    const [loading, setLoading] = useState(false)
+   
 
   const handleCopy = async () => {
     try {
@@ -30,6 +35,42 @@ export default function PromptClient({ prompt }) {
       toast.error("Something went wrong")
     }
   }
+
+  const handleBookmark = async () => {
+  try {
+    setLoading(true)
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookmark/toggle`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userEmail: user.email, // replace with session user
+          promptId: prompt._id
+        })
+      }
+    )
+
+    const data = await res.json()
+
+    if (data.success) {
+      setBookmarked(data.bookmarked)
+      toast.success(data.message)
+    } else {
+      toast.error("Failed")
+    }
+
+  } catch (error) {
+    toast.error("Something went wrong")
+  } finally {
+    setLoading(false)
+  }
+}
+
+   
 
   return (
     <div className="max-w-6xl mx-auto mt-24 px-4">
@@ -63,9 +104,15 @@ export default function PromptClient({ prompt }) {
               Copy Prompt
             </button>
 
-            <button className="px-4 py-2 border rounded-lg">
-              Bookmark
-            </button>
+           <button
+  onClick={handleBookmark}
+  disabled={loading}
+  className={`px-4 py-2 rounded-lg border transition ${
+    bookmarked ? "bg-black text-white" : "bg-white"
+  }`}
+>
+  {bookmarked ? "Bookmarked ❤️" : "Bookmark 🤍"}
+</button>
           </div>
 
         </div>
