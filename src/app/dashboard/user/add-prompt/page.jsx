@@ -1,9 +1,14 @@
 import React from 'react'
+import UserAddPromptPage from './AddPrompt'
+import { getUserSession } from '@/lib/cors/session'
 
-const UserAddPrompts = () => {
+const UserAddPrompt =async () => {
+  const user = await getUserSession()
   return (
-    <div>UserAddPrompts</div>
+    <div>
+      <UserAddPromptPage user={user}/>
+    </div>
   )
 }
 
-export default UserAddPrompts
+export default UserAddPrompt

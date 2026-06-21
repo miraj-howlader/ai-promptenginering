@@ -27,3 +27,14 @@ export const getAllPrompts = async (paramsObj) => {
 
   return res.json()
 }
+
+// get user prompt 
+
+
+export const getAllUserPrompt = async (email) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/get?email=${email}`
+  )
+
+  return res.json()
+}

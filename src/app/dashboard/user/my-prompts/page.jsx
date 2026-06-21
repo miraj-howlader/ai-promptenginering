@@ -1,8 +1,20 @@
-import React from 'react'
+import { getUserSession } from "@/lib/cors/session"
+import MyPrompt from "./MyPrompt"
+import { getAllUserPrompt } from "@/lib/api"
 
-const MyPrompts = () => {
+const MyPrompts = async () => {
+  const user = await getUserSession()
+
+  console.log("SESSION:", user)
+
+  if (!user?.email) {
+    return <div>Please login</div>
+  }
+
+  const data = await getAllUserPrompt(user.email)
+
   return (
-    <div>MyPrompts</div>
+    <MyPrompt data={data} user={user} />
   )
 }
 
