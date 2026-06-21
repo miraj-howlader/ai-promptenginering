@@ -1,7 +1,7 @@
 'use client'
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
 
@@ -9,6 +9,9 @@ import toast from "react-hot-toast"
 export default function PromptClient({ prompt,user }) {
     const [bookmarked, setBookmarked] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [reviews, setReviews] = useState([])
+    const [rating, setRating] = useState(5)
+    const [comment, setComment] = useState("")
    
 
   const handleCopy = async () => {
@@ -70,6 +73,63 @@ export default function PromptClient({ prompt,user }) {
   }
 }
 
+const handleReview = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/review`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userEmail: user.email,
+          promptId: prompt._id,
+          rating,
+          comment
+        })
+      }
+    )
+
+    const data = await res.json()
+
+    if (data.success) {
+      toast.success("Review added")
+
+      // reload reviews
+      setReviews(prev => [
+        {
+          userEmail: user.email,
+          rating,
+          comment,
+          createdAt: new Date()
+        },
+        ...prev
+      ])
+
+      setComment("")
+    } else {
+      toast.error(data.message)
+    }
+
+  } catch (error) {
+    toast.error("Something went wrong")
+  }
+}
+
+useEffect(() => {
+  const loadReviews = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/reviews/${prompt._id}`
+    )
+
+    const data = await res.json()
+    setReviews(data)
+  }
+
+  loadReviews()
+}, [prompt._id])
+
    
 
   return (
@@ -115,6 +175,41 @@ export default function PromptClient({ prompt,user }) {
 </button>
           </div>
 
+          {/* REVIEW FORM (ADD HERE) */}
+{/* <div className="mt-10 border p-4 rounded-lg">
+
+  <h2 className="text-xl font-semibold mb-3">
+    Leave a Review
+  </h2>
+
+  <select
+    value={rating}
+    onChange={(e) => setRating(Number(e.target.value))}
+    className="border p-2 rounded mb-3 w-full"
+  >
+    <option value={1}>1</option>
+    <option value={2}>2</option>
+    <option value={3}>3</option>
+    <option value={4}>4</option>
+    <option value={5}>5</option>
+  </select>
+
+  <textarea
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+    className="w-full border p-2 rounded mb-3"
+    placeholder="Write your review..."
+  />
+
+  <button
+    onClick={handleReview}
+    className="px-4 py-2 bg-black text-white rounded"
+  >
+    Submit Review
+  </button>
+
+</div> */}
+
         </div>
 
       </div>
@@ -123,6 +218,58 @@ export default function PromptClient({ prompt,user }) {
       <div className="mt-12 p-5 border rounded-lg bg-gray-50 whitespace-pre-wrap">
         {prompt.content}
       </div>
+
+
+      {/* REVIEW FORM (ADD HERE) */}
+<div className="mt-10 border p-4 rounded-lg">
+
+  <h2 className="text-xl font-semibold mb-3">
+    Leave a Review
+  </h2>
+
+  <select
+    value={rating}
+    onChange={(e) => setRating(Number(e.target.value))}
+    className="border p-2 rounded mb-3 w-full"
+  >
+    <option value={1}>1</option>
+    <option value={2}>2</option>
+    <option value={3}>3</option>
+    <option value={4}>4</option>
+    <option value={5}>5</option>
+  </select>
+
+  <textarea
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+    className="w-full border p-2 rounded mb-3"
+    placeholder="Write your review..."
+  />
+
+  <button
+    onClick={handleReview}
+    className="px-4 py-2 bg-black text-white rounded"
+  >
+    Submit Review
+  </button>
+
+</div>
+
+<div className="mt-10">
+
+  <h2 className="text-2xl font-semibold mb-4">
+    Reviews
+  </h2>
+
+  {reviews.map((r, i) => (
+    <div key={i} className="border p-3 rounded mb-3">
+      <p className="font-semibold">{r.userEmail}</p>
+      <p>⭐ {r.rating}/5</p>
+      <p>{r.comment}</p>
+    </div>
+  ))}
+
+</div>
 
     </div>
   )
