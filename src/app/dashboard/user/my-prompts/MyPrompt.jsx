@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const MyPrompt = ({ data }) => {
   const [loading, setLoading] = useState(true)
@@ -16,28 +17,35 @@ const MyPrompt = ({ data }) => {
     alert(`Edit: ${item.title}`)
   }
 
-  const handleDelete = async (id) => {
-    const confirmDelete = confirm("Are you sure?")
+ const handleDelete = async (id) => {
+  const confirmDelete = confirm("Are you sure you want to delete this prompt?")
 
-    if (!confirmDelete) return
+  if (!confirmDelete) return
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/delete/${id}`,
-        {
-          method: "DELETE",
-        }
-      )
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/delete/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
 
-      await res.json()
+    const data = await res.json()
 
-      alert("Deleted successfully")
-      window.location.reload()
-
-    } catch (error) {
-      console.log(error)
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to delete")
     }
+
+    toast.success("Deleted successfully ✅")
+
+    // 🔥 REMOVE ITEM FROM UI (NO PAGE RELOAD)
+    setLocalData((prev) => prev.filter(item => item._id !== id))
+
+  } catch (error) {
+    console.log(error)
+    
   }
+}
 
   // 🔥 LOADING UI
   if (loading) {
