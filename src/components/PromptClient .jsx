@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import ReportModal from "./ReportModal"
 
 
 
@@ -12,7 +13,10 @@ export default function PromptClient({ prompt,user }) {
     const [reviews, setReviews] = useState([])
     const [rating, setRating] = useState(5)
     const [comment, setComment] = useState("")
-   
+    const [openReport, setOpenReport] = useState(false)
+    const [reason, setReason] = useState("")
+    const [description, setDescription] = useState("")
+    
 
   const handleCopy = async () => {
     try {
@@ -117,6 +121,31 @@ const handleReview = async () => {
   }
 }
 
+const handleReport = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/report`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        promptId: prompt._id,
+        userEmail: user.email,
+        reason,
+        description
+      })
+    }
+  )
+
+  const data = await res.json()
+
+  if (data.success) {
+    alert("Report submitted")
+    setOpenReport(false)
+  }
+}
+
 useEffect(() => {
   const loadReviews = async () => {
     const res = await fetch(
@@ -173,42 +202,26 @@ useEffect(() => {
 >
   {bookmarked ? "Bookmarked ❤️" : "Bookmark 🤍"}
 </button>
+        <button
+  onClick={() => setOpenReport(true)}
+  className="px-4 py-2 bg-red-500 text-white rounded"
+>
+ Report
+</button>
+ <ReportModal 
+  openReport={openReport}
+  setOpenReport={setOpenReport}
+  reason={reason}
+  setReason={setReason}
+  description={description}
+  setDescription={setDescription}
+  handleReport={handleReport}
+  />
           </div>
 
-          {/* REVIEW FORM (ADD HERE) */}
-{/* <div className="mt-10 border p-4 rounded-lg">
+  
 
-  <h2 className="text-xl font-semibold mb-3">
-    Leave a Review
-  </h2>
-
-  <select
-    value={rating}
-    onChange={(e) => setRating(Number(e.target.value))}
-    className="border p-2 rounded mb-3 w-full"
-  >
-    <option value={1}>1</option>
-    <option value={2}>2</option>
-    <option value={3}>3</option>
-    <option value={4}>4</option>
-    <option value={5}>5</option>
-  </select>
-
-  <textarea
-    value={comment}
-    onChange={(e) => setComment(e.target.value)}
-    className="w-full border p-2 rounded mb-3"
-    placeholder="Write your review..."
-  />
-
-  <button
-    onClick={handleReview}
-    className="px-4 py-2 bg-black text-white rounded"
-  >
-    Submit Review
-  </button>
-
-</div> */}
+    
 
         </div>
 
@@ -224,7 +237,7 @@ useEffect(() => {
 <div className="mt-10 border p-4 rounded-lg">
 
   <h2 className="text-xl font-semibold mb-3">
-    Leave a Review
+    Leave a Comments
   </h2>
 
   <select
@@ -243,14 +256,14 @@ useEffect(() => {
     value={comment}
     onChange={(e) => setComment(e.target.value)}
     className="w-full border p-2 rounded mb-3"
-    placeholder="Write your review..."
+    placeholder="Write your comments..."
   />
 
   <button
     onClick={handleReview}
     className="px-4 py-2 bg-black text-white rounded"
   >
-    Submit Review
+    Submit Comment
   </button>
 
 </div>
@@ -258,7 +271,7 @@ useEffect(() => {
 <div className="mt-10">
 
   <h2 className="text-2xl font-semibold mb-4">
-    Reviews
+    Comments
   </h2>
 
   {reviews.map((r, i) => (
