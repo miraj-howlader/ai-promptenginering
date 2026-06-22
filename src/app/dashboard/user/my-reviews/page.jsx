@@ -1,9 +1,14 @@
 import React from 'react'
+import MyReviews from './ReviewPage'
+import { getUserSession } from '@/lib/cors/session'
 
-const MyReviews = () => {
+const Review =async () => {
+  const user = await getUserSession()
   return (
-    <div>MyReviews</div>
+    <div>
+      <MyReviews user={user}/>
+    </div>
   )
 }
 
-export default MyReviews
+export default Review

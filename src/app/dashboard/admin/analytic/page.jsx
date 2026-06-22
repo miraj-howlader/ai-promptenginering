@@ -36,7 +36,8 @@ const AnaLyticPage = () => {
 
 
 
-  const fetchAnalytics = async () => {
+useEffect(()=>{
+      const fetchAnalytics = async () => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/admin/analytics`
@@ -52,10 +53,12 @@ const AnaLyticPage = () => {
     setLoading(false)
   }
 }
+fetchAnalytics()
+},[])
 
-useEffect(() => {
-  fetchAnalytics()
-}, [])
+// useEffect(() => {
+//   fetchAnalytics()
+// }, [])
 
 
   return (
