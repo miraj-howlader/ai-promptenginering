@@ -30,7 +30,7 @@ const DashboardSidebar = async () => {
     { icon: Building, href: "/dashboard/admin/prompts", label: "Prompts" },
     { icon: Briefcase, href: "/dashboard/admin/reported-prompts", label: "Reported-prompts" },
     { icon: CreditCard, href: "/dashboard/admin/payments", label: "Payments" },
-    { icon: Gear, href: "/dashboard/admin/settings", label: "Settings" },
+    { icon: Gear, href: "/dashboard/admin/analytic", label: "Analytic" },
   ];
 
   const navLinksMap = {
