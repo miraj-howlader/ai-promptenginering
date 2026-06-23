@@ -1,10 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import Swal from 'sweetalert2'
 
 const MyPrompt = ({ data }) => {
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     if (data) {
@@ -13,37 +16,44 @@ const MyPrompt = ({ data }) => {
   }, [data])
 
   const handleEdit = (item) => {
-    console.log("Edit item:", item)
-    alert(`Edit: ${item.title}`)
+  
+    router.push(`/dashboard/edit/${item._id}`)
   }
 
- const handleDelete = async (id) => {
-  const confirmDelete = confirm("Are you sure you want to delete this prompt?")
+const handleDelete = async (id) => {
+  const result = await Swal.fire({
+    title: 'Delete Prompt?',
+    text: 'This action cannot be undone!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ef4444',
+    cancelButtonColor: '#6b7280',
+    confirmButtonText: 'Yes, Delete'
+  })
 
-  if (!confirmDelete) return
+  if (!result.isConfirmed) return
 
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/delete/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE'
       }
     )
 
-    const data = await res.json()
+    const result = await res.json()
 
     if (!res.ok) {
-      throw new Error(data.message || "Failed to delete")
+      throw new Error(result.message)
     }
 
-    toast.success("Deleted successfully ✅")
+    setLocalData(prev =>
+      prev.filter(item => item._id !== id)
+    )
 
-    // 🔥 REMOVE ITEM FROM UI (NO PAGE RELOAD)
-    setLocalData((prev) => prev.filter(item => item._id !== id))
-
+    toast.success('Prompt Deleted Successfully')
   } catch (error) {
-    console.log(error)
-    
+    toast.error(error.message)
   }
 }
 

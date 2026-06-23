@@ -1,15 +1,17 @@
-export default function ProfileCard() {
+export default function ProfileCard({user}) {
+
+  
   return (
     <div className="bg-white p-5 rounded-xl shadow">
       <div className="flex items-center gap-4">
         <img
-          src="https://i.pravatar.cc/100"
+          src={user?.image}
           className="w-14 h-14 rounded-full"
         />
         <div>
-          <h2 className="font-bold">John Doe</h2>
+          <h2 className="font-bold">{user?.name}</h2>
           <p className="text-sm text-gray-500">
-            johndoe@gmail.com
+            {user?.email}
           </p>
         </div>
       </div>

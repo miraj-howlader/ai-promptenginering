@@ -1,8 +1,13 @@
 import React from 'react'
+import Profile from './Profile'
+import { getUserSession } from '@/lib/cors/session'
 
-const UserProfile = () => {
+const UserProfile =async () => {
+  const user = await getUserSession()
   return (
-    <div>UserProfile</div>
+    <div>
+      <Profile user={user}/>
+    </div>
   )
 }
 

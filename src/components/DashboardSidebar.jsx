@@ -20,7 +20,7 @@ const DashboardSidebar = async () => {
     { icon: Magnifier, href: "/dashboard/user/add-prompt", label: "Add-prompt" },
     { icon: Bookmark, href: "/dashboard/user/my-prompts", label: "My-prompt" },
     { icon: FileText, href: "/dashboard/user/my-reviews", label: "My-reviews" },
-    { icon: CreditCard, href: "/dashboard/user/save-prompts", label: "Save-prompts" },
+    // { icon: CreditCard, href: "/dashboard/user/save-prompts", label: "Save-prompts" },
     { icon: User, href: "/dashboard/user/profile", label: "Profile" },
   ];
 
