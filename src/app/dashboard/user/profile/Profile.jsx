@@ -1,9 +1,11 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const Profile = ({user}) => {
       const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
         const email = user?.email
 
@@ -34,6 +36,9 @@ const Profile = ({user}) => {
     
     
 //   }, [email])
+if(!user){
+  router.push('/unauthorized')
+}
 
 
   return (

@@ -6,13 +6,13 @@ import toast from 'react-hot-toast'
 import { redirect, useRouter } from 'next/navigation'
 
 
-export default  function UserAddPromptPage({user}) {
+export default  function CreatorAddPromptPage({user}) {
   const [tags, setTags] = useState('')
   const [preview, setPreview] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
- 
+
 
   const categories = [
     'Marketing',
@@ -86,9 +86,8 @@ export default  function UserAddPromptPage({user}) {
       aiTool: form.aiTool.value,
       difficulty: form.difficulty.value,
       visibility: form.visibility.value,
+      creatorEmail:user.email,
       thumbnail: imageUrl,
-      userId:user._id,
-      email:user.email,
 
       tags: tags
         .split(',')
@@ -99,7 +98,7 @@ export default  function UserAddPromptPage({user}) {
       status: 'pending',
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user-addprompt`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/add-prompt`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -113,6 +112,7 @@ export default  function UserAddPromptPage({user}) {
      }
     setLoading(false)
   }
+
   if(!user){
     router.push('/unauthorized')
   }

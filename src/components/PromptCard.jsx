@@ -73,7 +73,7 @@ const PromptCard =({ prompt,session }) => {
           <span>🔥 {prompt.copyCount || 0} uses</span>
           <span>{prompt.visibility}</span>
         </div>
-
+         
        <Link href={`/prompts/${prompt._id}`}>
   {session && (
     <Button

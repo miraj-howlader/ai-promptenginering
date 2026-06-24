@@ -37,7 +37,7 @@ const Registration = () => {
     e.preventDefault()
     setLoading(true)
 
-    const plan = role === 'user' ? 'user_free' : 'creator_free'
+    const plan = role === 'user' ? 'user-free' : 'creator-free'
 
     try {
       const { data, error } = await authClient.signUp.email({
