@@ -9,6 +9,7 @@ const FeaturedPrompt = async () => {
 
   try {
     const data = await getAllPrompts({})
+    console.log(data)
     promptData = data?.slice(0, 6) || []
   } catch (error) {
     console.error('Failed to fetch prompts:', error)
