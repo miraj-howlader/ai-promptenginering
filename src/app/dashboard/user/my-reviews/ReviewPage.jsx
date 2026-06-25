@@ -15,7 +15,7 @@ const MyReviews = ({user}) => {
       )
 
       const data = await res.json()
-      console.log(data)
+   
       setReviews(data)
 
     } catch (error) {

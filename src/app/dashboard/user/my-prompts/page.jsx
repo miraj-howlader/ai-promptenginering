@@ -5,7 +5,7 @@ import { getAllUserPrompt } from "@/lib/api"
 const MyPrompts = async () => {
   const user = await getUserSession()
 
-  console.log("SESSION:", user)
+
 
   if (!user?.email) {
     return <div>Please login</div>
