@@ -60,15 +60,15 @@ if(!user){
           <div className="bg-white/5 border border-white/10 p-6 rounded-xl">
 
             <h2 className="text-xl font-semibold">
-              {data.user.name}
+              {data?.user?.name}
             </h2>
 
             <p className="text-zinc-400">
-              {data.user.email}
+              {data?.user?.email}
             </p>
 
             <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-500/20 text-blue-400 rounded-full">
-              {data.user.role}
+              {data?.user?.role}
             </span>
 
           </div>
@@ -79,21 +79,21 @@ if(!user){
             <div className="bg-white/5 border border-white/10 p-5 rounded-xl">
               <p className="text-zinc-400">Total Prompts</p>
               <h3 className="text-2xl font-bold text-purple-400">
-                {data.stats.totalPrompts}
+                {data?.stats?.totalPrompts}
               </h3>
             </div>
 
             <div className="bg-white/5 border border-white/10 p-5 rounded-xl">
               <p className="text-zinc-400">Total Reviews</p>
               <h3 className="text-2xl font-bold text-green-400">
-                {data.stats.totalReviews}
+                {data?.stats?.totalReviews}
               </h3>
             </div>
 
             <div className="bg-white/5 border border-white/10 p-5 rounded-xl">
               <p className="text-zinc-400">Total Copies</p>
               <h3 className="text-2xl font-bold text-orange-400">
-                {data.stats.totalCopies}
+                {data?.stats?.totalCopies}
               </h3>
             </div>
 

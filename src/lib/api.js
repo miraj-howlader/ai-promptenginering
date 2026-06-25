@@ -19,6 +19,7 @@ export const getAllPrompts = async (paramsObj) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/prompts?${params.toString()}`,
   )
+  console.log(res)
 
 
   if (!res.ok) {

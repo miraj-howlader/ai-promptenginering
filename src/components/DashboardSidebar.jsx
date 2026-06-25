@@ -60,7 +60,7 @@ const DashboardSidebar = async () => {
   return (
     <>
       {/* Desktop Sidebar Sidebar stays locked to the screen height while scrolling */}
-      <aside className="hidden w-64  shrink-0 border-r border-default p-4 lg:block h-screen sticky top-0">
+      <aside className="hidden lg:flex lg:w-64 xl:w-72 shrink-0 border-r border-default p-4 h-screen sticky top-0 overflow-y-auto">
         {navContent}
       </aside>
 
